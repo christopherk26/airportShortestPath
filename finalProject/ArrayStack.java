@@ -1,16 +1,12 @@
 //
 // Name:       Kurdoghlian, Christopher
-// Project:    2
-// Due:        3/14/2024
+// Project:    4
+// Due:        April 30, 2024
 // Course:     cs-2400-03-sp24
 //
 // Description:
-//             In this project I create an ADT stack, implement it using 
-//             the array in ArrayStack, and then create a class Expression
-//             with class methods that allow conversion of an array of strings
-//             into postfix notation, and then evaluate that postfix expression.
-//             Doing so requires the stack. In Expresesion test, command line
-//             parameters are read in, converted to postfix, then evaluated and printed.
+//             In this project we create an airport app where we can find the optimal path between
+//             two airports, given their names and locations. We can also query Airports using their code. 
 //
 
 import java.util.Arrays;

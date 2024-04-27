@@ -1,3 +1,14 @@
+//
+// Name:       Kurdoghlian, Christopher
+// Project:    4
+// Due:        April 30, 2024
+// Course:     cs-2400-03-sp24
+//
+// Description:
+//             In this project we create an airport app where we can find the optimal path between
+//             two airports, given their names and locations. We can also query Airports using their code. 
+//
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.List;
@@ -53,24 +64,21 @@ class Vertex<T> implements VertexInterface<T> {
     } // end equals
 
     public boolean connect(VertexInterface<T> endVertex, double edgeWeight) {
-    boolean result = false;
-    if (!this.equals(endVertex))
-    { // Vertices are distinct
-    Iterator<VertexInterface<T>> neighbors = getNeighborIterator();
-    boolean duplicateEdge = false;
-    while (!duplicateEdge && neighbors.hasNext())
-    {
-    VertexInterface<T> nextNeighbor = neighbors.next();
-    if (endVertex.equals(nextNeighbor))
-    duplicateEdge = true;
-    } // end while
-    if (!duplicateEdge)
-    {
-    edgeList.add(new Edge(endVertex, edgeWeight));
-    result = true;
-    } // end if
-    } // end if
-    return result;
+        boolean result = false;
+        if (!this.equals(endVertex)) { // Vertices are distinct
+            Iterator<VertexInterface<T>> neighbors = getNeighborIterator();
+            boolean duplicateEdge = false;
+            while (!duplicateEdge && neighbors.hasNext()) {
+                VertexInterface<T> nextNeighbor = neighbors.next();
+                if (endVertex.equals(nextNeighbor))
+                    duplicateEdge = true;
+            } // end while
+            if (!duplicateEdge) {
+                edgeList.add(new Edge(endVertex, edgeWeight));
+                result = true;
+            } // end if
+        } // end if
+        return result;
     } // end connect
 
     public Iterator<VertexInterface<T>> getNeighborIterator() {
@@ -82,6 +90,8 @@ class Vertex<T> implements VertexInterface<T> {
 
         private NeighborIterator() {
             edges = edgeList.iterator();
+            // creates iterator from the List upon creation of a 
+            // NeighborIterator object
         } // end default constructor
 
         public boolean hasNext() {
@@ -96,6 +106,28 @@ class Vertex<T> implements VertexInterface<T> {
             } else
                 throw new NoSuchElementException();
             return nextNeighbor;
+        } // end next
+    }
+
+    private class WeightIterator implements Iterator<Double> {
+        private Iterator<Edge> edges;
+
+        private WeightIterator() {
+            edges = edgeList.iterator();
+        } // end default constructor
+
+        public boolean hasNext() {
+            return edges.hasNext();
+        } // end hasNext
+
+        public Double next() {
+            double nextWeight = -1;
+            if (edges.hasNext()) {
+                Edge edgeToNextNeighbor = edges.next();
+                nextWeight = edgeToNextNeighbor.getWeight();
+            } else
+                throw new NoSuchElementException();
+            return nextWeight;
         } // end next
     }
 
@@ -124,8 +156,7 @@ class Vertex<T> implements VertexInterface<T> {
 
     @Override
     public T getLabel() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getLabel'");
+        return label;
     }
 
     @Override
@@ -145,37 +176,31 @@ class Vertex<T> implements VertexInterface<T> {
 
     @Override
     public Iterator<Double> getWeightIterator() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getWeightIterator'");
+        return new WeightIterator();
     }
 
     @Override
     public void setPredecessor(VertexInterface<T> predecessor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setPredecessor'");
+        previousVertex = predecessor;
     }
 
     @Override
     public VertexInterface<T> getPredecessor() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPredecessor'");
+        return previousVertex;
     }
 
     @Override
     public boolean hasPredecessor() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hasPredecessor'");
+        return previousVertex != null;
     }
 
     @Override
     public void setCost(double newCost) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setCost'");
+        this.cost = newCost;
     }
 
     @Override
     public double getCost() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCost'");
+        return cost;
     }
 } // end Vertex

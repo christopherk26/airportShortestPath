@@ -23,7 +23,7 @@ public class HashedDictionary<K, V> implements DictionaryInterface<K, V> {
     private int collisionCount;
 
     public HashedDictionary() {
-        this(1009);
+        this(31);
     }
 
     public HashedDictionary(int initialCapacity) {
@@ -166,7 +166,7 @@ public class HashedDictionary<K, V> implements DictionaryInterface<K, V> {
 
     @Override
     public Iterator<V> getValueIterator() {
-        throw new UnsupportedOperationException("Unimplemented method 'getValueIterator'");
+        return new DictionaryValueIterator();
     }
 
     @Override
@@ -223,6 +223,33 @@ public class HashedDictionary<K, V> implements DictionaryInterface<K, V> {
                 }
                 counter++;
                 return dictionary[dictIndex++].getKey();
+                // will return set[counter] and then do counter++.
+                // thus it is a one liner.
+            } else {
+                // if there is no next then throw the no such element exception
+                throw new NoSuchElementException("no such element");
+            }
+        }
+
+    }
+
+    class DictionaryValueIterator implements Iterator<V> {
+        int counter = 0;
+        int dictIndex = 0;
+
+        @Override
+        public boolean hasNext() {
+            return (counter < numberOfEntries);
+        }
+
+        @Override
+        public V next() {
+            if (hasNext()) {
+                while (dictionary[dictIndex] == null) {
+                    dictIndex++;
+                }
+                counter++;
+                return dictionary[dictIndex++].getValue();
                 // will return set[counter] and then do counter++.
                 // thus it is a one liner.
             } else {

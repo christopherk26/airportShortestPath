@@ -17,6 +17,7 @@ public class AirportApp {
         System.out.println("Airports v0.24 by C. Kurdoghlian");
         System.out.println();
 
+        // create the graph
         GraphInterface<String> routeMap = new DirectedGraph<>();
 
         Scanner airportsFile = new Scanner(new File("airports.csv"));
@@ -27,13 +28,16 @@ public class AirportApp {
         while (airportsFile.hasNext()) {
             airportArr = airportsFile.nextLine().split(",");
             airportsDict.add(airportArr[0], airportArr[1]);
+            // add to the dict for querying, and then also we are adding vertices to the route map after
             routeMap.addVertex(airportArr[0]);
         }
 
         Scanner distancesFile = new Scanner(new File("distances.csv"));
         String[] distancesArr = new String[3];
         while (distancesFile.hasNext()) {
+            // splitting it and putting it into an array
             distancesArr = distancesFile.nextLine().split(",");
+            // adding the edges. 
             routeMap.addEdge(distancesArr[0], distancesArr[1], Double.parseDouble(distancesArr[2]));
         }
 
@@ -56,11 +60,15 @@ public class AirportApp {
             } else if (command.equals("D")) {
                 System.out.print("Airport codes from to? ");
                 fromTo = kb.nextLine();
+                // get the two airports
                 fromToArr = fromTo.split(" ");
+                // make sure that they are known
                 if (!airportsDict.contains(fromToArr[0]) || !airportsDict.contains(fromToArr[1])) {
                     System.out.println("Airport code unknown");
                 } else {
+                    // create the stack for the route
                     StackInterface<String> route = new ArrayStack<>();
+                    // get the distance
                     double distance = routeMap.getCheapestPath(fromToArr[0], fromToArr[1], route);
                     if (distance != -1) {
                         System.out.println("The minimum distance between " + fromToArr[0] + " " + fromToArr[1] + ": " + distance);
