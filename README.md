@@ -1,3 +1,5 @@
+TYPE IN THE COMMAND H TO GET TO THE MAIN MENU AND SEE THE COMMANDS THAT YOU CAN DO!
+
 Main photo for reference to the airports and connections that exist
 
 ![Screenshot 2024-09-18 at 12 11 44 PM](https://github.com/user-attachments/assets/fa73ccc5-077b-4e05-9e31-c65c3e9fd3e5)
